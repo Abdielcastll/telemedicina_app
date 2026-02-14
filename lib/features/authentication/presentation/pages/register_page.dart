@@ -137,7 +137,7 @@ class RegisterPage extends StatelessWidget {
                               const TextField(
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  labelText: 'Contrasena',
+                                  labelText: 'Contraseña',
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -145,7 +145,7 @@ class RegisterPage extends StatelessWidget {
                               const TextField(
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  labelText: 'Confirmar contrasena',
+                                  labelText: 'Confirmar contraseña',
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -155,7 +155,7 @@ class RegisterPage extends StatelessWidget {
                                 child: ElevatedButton(
                                   onPressed: () => Get.snackbar(
                                     'Registro',
-                                    'Pantalla en construccion.',
+                                    'Pantalla en construcción.',
                                   ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary,
