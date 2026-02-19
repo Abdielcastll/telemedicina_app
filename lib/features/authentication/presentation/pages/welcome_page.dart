@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:telemedicina_app/core/res/media_res.dart';
 import 'package:telemedicina_app/core/routes/app_routes.dart';
 import 'package:telemedicina_app/core/theme/app_colors.dart';
+import 'package:telemedicina_app/features/authentication/presentation/theme/auth_decorations.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -13,19 +15,7 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.welcomeGradientTop,
-                  AppColors.welcomeGradientMid,
-                  AppColors.welcomeGradientBottom,
-                ],
-              ),
-            ),
-          ),
+          Container(decoration: AuthDecorations.background),
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
@@ -37,30 +27,9 @@ class WelcomePage extends StatelessWidget {
               children: [
                 const SizedBox(height: 40),
                 Column(
-                  children: const [
-                    Icon(
-                      Icons.health_and_safety,
-                      size: 64,
-                      color: AppColors.primary,
-                    ),
+                  children: [
                     SizedBox(height: 8),
-                    Text(
-                      'MediCabin',
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primaryDark,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      'CUIDADO DE TU SALUD',
-                      style: TextStyle(
-                        letterSpacing: 1.2,
-                        fontSize: 12,
-                        color: AppColors.primaryMuted,
-                      ),
-                    ),
+                    Image.asset(MediaRes.logo, scale: 2.0),
                   ],
                 ),
                 const Spacer(),
@@ -88,7 +57,7 @@ class WelcomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Spacer(),
+                const Spacer(flex: 2),
                 TextButton(
                   onPressed: () => Get.snackbar(
                     'Ayuda',

@@ -2,8 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:telemedicina_app/core/res/media_res.dart';
 import 'package:telemedicina_app/core/routes/app_routes.dart';
 import 'package:telemedicina_app/core/theme/app_colors.dart';
+
+import '../theme/auth_decorations.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -13,19 +16,7 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.loginGradientTop,
-                  AppColors.loginGradientMid,
-                  AppColors.loginGradientBottom,
-                ],
-              ),
-            ),
-          ),
+          Container(decoration: AuthDecorations.background),
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
@@ -38,7 +29,7 @@ class RegisterPage extends StatelessWidget {
                 return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
-                    vertical: 24,
+                    vertical: 15,
                   ),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
@@ -46,35 +37,7 @@ class RegisterPage extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(height: 24),
-                        Column(
-                          children: const [
-                            Icon(
-                              Icons.health_and_safety,
-                              size: 64,
-                              color: AppColors.primary,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'MediCabin',
-                              style: TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primaryDark,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'CUIDADO DE TU SALUD',
-                              style: TextStyle(
-                                letterSpacing: 1.2,
-                                fontSize: 12,
-                                color: AppColors.primaryMuted,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 32),
+                        Image.asset(MediaRes.logo, scale: 2.0),
                         Container(
                           padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
                           decoration: BoxDecoration(

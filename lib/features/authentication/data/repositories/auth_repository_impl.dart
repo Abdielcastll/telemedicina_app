@@ -8,7 +8,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
 
   @override
-  Future<User> login({required String email, required String password}) {
-    return remoteDataSource.login(email: email, password: password);
+  Future<User> login({required String username, required String password}) {
+    return remoteDataSource.login(username: username, password: password);
   }
 }

@@ -8,8 +8,9 @@ class LoginController extends GetxController {
 
   final LoginUseCase loginUseCase;
 
-  final email = ''.obs;
+  final username = ''.obs;
   final password = ''.obs;
+  final showPassword = false.obs;
   final isLoading = false.obs;
   final errorMessage = ''.obs;
 
@@ -18,13 +19,16 @@ class LoginController extends GetxController {
     errorMessage.value = '';
     isLoading.value = true;
     try {
-      await loginUseCase(email: email.value.trim(), password: password.value);
+      await loginUseCase(
+        username: username.value.trim(),
+        password: password.value,
+      );
       Get.snackbar('Inicio de sesion', 'Bienvenido');
       Get.offAllNamed(Routes.home);
     } on AuthException catch (e) {
       errorMessage.value = e.message;
-    } catch (_) {
-      errorMessage.value = 'Ocurrio un error inesperado.';
+    } catch (e) {
+      errorMessage.value = 'Ocurrio un error inesperado. $e';
     } finally {
       isLoading.value = false;
     }
