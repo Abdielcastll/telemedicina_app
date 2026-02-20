@@ -12,7 +12,7 @@ class ApiConstants {
   static const String reasonGetAllPath =
       '/Reason/reason/getAll'; // Obtener todos los motivos de consultas
   static const String settingExceptionByTypePath =
-      '/Setting/exceptions/getTypeSettingException';
+      '/Setting/exceptions/getTypeSettingException'; // Obtener todas las configuraciones
 
   static String get securityApiUser => _requiredEnv('SECURITY_API_USER');
   static String get securityApiPassword =>
