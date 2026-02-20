@@ -1,6 +1,4 @@
-import '../../domain/entities/user.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../datasources/auth_remote_data_source.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.remoteDataSource});

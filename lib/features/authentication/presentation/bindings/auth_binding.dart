@@ -1,18 +1,20 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:telemedicina_app/core/services/auth_session_service.dart';
-import 'package:telemedicina_app/features/authentication/data/datasources/auth_remote_data_source.dart';
-import 'package:telemedicina_app/features/authentication/data/repositories/auth_repository_impl.dart';
-import 'package:telemedicina_app/features/authentication/domain/repositories/auth_repository.dart';
-import 'package:telemedicina_app/features/authentication/domain/usecases/login_usecase.dart';
-import 'package:telemedicina_app/features/authentication/presentation/getx/login_controller.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
 
 class AuthBinding extends Bindings {
   @override
   void dependencies() {
+    if (!Get.isRegistered<AuthSessionService>()) {
+      Get.lazyPut<AuthSessionService>(() => AuthSessionService(), fenix: true);
+    }
+
+    if (!Get.isRegistered<http.Client>()) {
+      Get.lazyPut<http.Client>(() => http.Client(), fenix: true);
+    }
+
     Get
-      ..lazyPut<AuthSessionService>(() => AuthSessionService(), fenix: true)
-      ..lazyPut<http.Client>(() => http.Client(), fenix: true)
       ..lazyPut<AuthRemoteDataSource>(
         () => HttpAuthRemoteDataSource(
           client: Get.find<http.Client>(),

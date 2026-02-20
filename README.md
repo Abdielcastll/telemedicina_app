@@ -14,3 +14,12 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Environment variables
+
+This project reads service credentials from `.env`.
+
+1. Copy `.env.example` to `.env`.
+2. Set these values:
+	- `SECURITY_API_USER`
+	- `SECURITY_API_PASSWORD`

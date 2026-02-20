@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:telemedicina_app/core/routes/app_routes.dart';
-import 'package:telemedicina_app/features/authentication/data/datasources/auth_remote_data_source.dart';
-import 'package:telemedicina_app/features/authentication/domain/usecases/login_usecase.dart';
+import 'package:telemedicina_app/core/_export.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
+import 'package:telemedicina_app/features/settings/_export.dart';
 
 class LoginController extends GetxController {
   LoginController({required this.loginUseCase});
@@ -19,13 +19,19 @@ class LoginController extends GetxController {
     errorMessage.value = '';
     isLoading.value = true;
     try {
-      await loginUseCase(
+      final user = await loginUseCase(
         username: username.value.trim(),
         password: password.value,
       );
+
+      await Get.find<SettingsService>().load(
+        userId: user.userId,
+        forceRefresh: true,
+      );
+
       Get.snackbar('Inicio de sesion', 'Bienvenido');
       Get.offAllNamed(Routes.home);
-    } on AuthException catch (e) {
+    } on AppException catch (e) {
       errorMessage.value = e.message;
     } catch (e) {
       errorMessage.value = 'Ocurrio un error inesperado. $e';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:telemedicina_app/features/home/presentation/getx/home_controller.dart';
+import 'package:telemedicina_app/features/symptoms/_export.dart';
 
-class HomePage extends GetView<HomeController> {
-  const HomePage({super.key});
+class SymptomsPage extends GetView<SymptomsController> {
+  const SymptomsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,22 +49,26 @@ class HomePage extends GetView<HomeController> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 12),
-                  DropdownButtonFormField<String>(
-                    initialValue: controller.selectedReason.value,
-                    decoration: const InputDecoration(
-                      labelText: 'Selecciona una opción',
-                      border: OutlineInputBorder(),
+                  if (controller.reasons.isNotEmpty)
+                    ...controller.reasons.map(
+                      (reason) => CheckboxListTile(
+                        value: controller.selectedReasons.contains(reason),
+                        onChanged: (value) =>
+                            controller.toggleReason(reason, value ?? false),
+                        title: Text(reason),
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
                     ),
-                    items: HomeController.predefinedReasons
-                        .map(
-                          (reason) => DropdownMenuItem<String>(
-                            value: reason,
-                            child: Text(reason),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: controller.setReason,
-                  ),
+                  if (controller.reasonsLoadMessage.value.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      controller.reasonsLoadMessage.value,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 12),
                   if (controller.isOtherReasonSelected)
                     TextFormField(
@@ -82,8 +86,16 @@ class HomePage extends GetView<HomeController> {
                   SizedBox(
                     height: 44,
                     child: ElevatedButton(
-                      onPressed: controller.submitConsultation,
-                      child: const Text('Guardar motivo'),
+                      onPressed:
+                          controller.reasons.isEmpty ||
+                              controller.isSaving.value
+                          ? null
+                          : controller.submitConsultation,
+                      child: Text(
+                        controller.isSaving.value
+                            ? 'Guardando...'
+                            : 'Guardar motivo',
+                      ),
                     ),
                   ),
                 ],

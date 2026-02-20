@@ -1,4 +1,4 @@
-import '../../domain/entities/user.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
 
 class UserModel extends User {
   const UserModel({

@@ -5,8 +5,7 @@ import 'package:get/get.dart';
 import 'package:telemedicina_app/core/res/media_res.dart';
 import 'package:telemedicina_app/core/routes/app_routes.dart';
 import 'package:telemedicina_app/core/theme/app_colors.dart';
-
-import '../theme/auth_decorations.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

@@ -46,3 +46,8 @@ app.*.map.json
 
 #fvm
 .fvm/
+
+# Environment variables
+.env
+.env.*
+!.env.example

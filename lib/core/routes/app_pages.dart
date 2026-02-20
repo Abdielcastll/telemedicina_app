@@ -5,8 +5,9 @@ import 'package:telemedicina_app/features/authentication/presentation/pages/forg
 import 'package:telemedicina_app/features/authentication/presentation/pages/login_page.dart';
 import 'package:telemedicina_app/features/authentication/presentation/pages/register_page.dart';
 import 'package:telemedicina_app/features/authentication/presentation/pages/welcome_page.dart';
-import 'package:telemedicina_app/features/home/presentation/bindings/home_binding.dart';
-import 'package:telemedicina_app/features/home/presentation/pages/home_page.dart';
+import 'package:telemedicina_app/features/symptoms/_export.dart';
+import 'package:telemedicina_app/features/video_call/_export.dart';
+import 'package:telemedicina_app/features/vital_signs/_export.dart';
 
 class AppPages {
   static const initial = Routes.welcome;
@@ -25,8 +26,13 @@ class AppPages {
     ),
     GetPage<void>(
       name: Routes.home,
-      page: () => const HomePage(),
-      binding: HomeBinding(),
+      page: () => const SymptomsPage(),
+      binding: SymptomsBinding(),
     ),
+    GetPage<void>(
+      name: Routes.vitalSignsCapture,
+      page: () => const VitalSignsCapturePage(),
+    ),
+    GetPage<void>(name: Routes.videoCall, page: () => const VideoCallPage()),
   ];
 }

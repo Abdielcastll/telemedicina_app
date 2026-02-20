@@ -1,5 +1,4 @@
-import '../entities/user.dart';
-import '../repositories/auth_repository.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
 
 class LoginUseCase {
   LoginUseCase(this.repository);

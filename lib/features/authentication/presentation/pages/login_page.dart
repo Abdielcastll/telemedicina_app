@@ -5,8 +5,7 @@ import 'package:get/get.dart';
 import 'package:telemedicina_app/core/res/media_res.dart';
 import 'package:telemedicina_app/core/routes/app_routes.dart';
 import 'package:telemedicina_app/core/theme/app_colors.dart';
-import 'package:telemedicina_app/features/authentication/presentation/getx/login_controller.dart';
-import 'package:telemedicina_app/features/authentication/presentation/theme/auth_decorations.dart';
+import 'package:telemedicina_app/features/authentication/_export.dart';
 
 class LoginPage extends GetView<LoginController> {
   LoginPage({super.key});

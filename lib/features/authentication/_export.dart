@@ -1,0 +1,13 @@
+export 'data/datasources/auth_remote_data_source.dart';
+export 'data/models/user_model.dart';
+export 'data/repositories/auth_repository_impl.dart';
+export 'domain/entities/user.dart';
+export 'domain/repositories/auth_repository.dart';
+export 'domain/usecases/login_usecase.dart';
+export 'presentation/bindings/auth_binding.dart';
+export 'presentation/getx/login_controller.dart';
+export 'presentation/pages/forgot_password_page.dart';
+export 'presentation/pages/login_page.dart';
+export 'presentation/pages/register_page.dart';
+export 'presentation/pages/welcome_page.dart';
+export 'presentation/theme/auth_decorations.dart';
