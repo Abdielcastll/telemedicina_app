@@ -3,6 +3,7 @@ import 'package:telemedicina_app/core/_export.dart';
 import 'package:telemedicina_app/core/constants/api_constants.dart';
 import 'package:telemedicina_app/core/services/api_response_parser.dart';
 import 'package:telemedicina_app/core/services/auth_session_service.dart';
+import 'package:telemedicina_app/core/utils/http_response_logger.dart';
 import 'package:telemedicina_app/features/settings/data/models/setting_exception_model.dart';
 import 'package:telemedicina_app/features/settings/domain/entities/setting_exception.dart';
 
@@ -27,6 +28,11 @@ class HttpSettingsDataSource implements SettingsDataSource {
     final response = await client.get(
       uri,
       headers: await sessionService.getAuthHeaders(),
+    );
+    HttpResponseLogger.logResponse(
+      source: 'SettingsDataSource',
+      endpoint: '${ApiConstants.settingExceptionByTypePath}/$userId',
+      response: response,
     );
 
     final body = ApiResponseParser.decodeBody(response.body);

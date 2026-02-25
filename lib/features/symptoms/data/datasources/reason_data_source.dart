@@ -3,6 +3,7 @@ import 'package:telemedicina_app/core/_export.dart';
 import 'package:telemedicina_app/core/constants/api_constants.dart';
 import 'package:telemedicina_app/core/services/api_response_parser.dart';
 import 'package:telemedicina_app/core/services/auth_session_service.dart';
+import 'package:telemedicina_app/core/utils/http_response_logger.dart';
 import 'package:telemedicina_app/features/symptoms/_export.dart';
 
 abstract class ReasonDataSource {
@@ -29,6 +30,11 @@ class HttpReasonDataSource implements ReasonDataSource {
     final response = await client.get(
       _reasonsUri,
       headers: await sessionService.getAuthHeaders(),
+    );
+    HttpResponseLogger.logResponse(
+      source: 'ReasonDataSource',
+      endpoint: ApiConstants.reasonGetAllPath,
+      response: response,
     );
 
     final body = ApiResponseParser.decodeBody(response.body);

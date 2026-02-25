@@ -17,11 +17,11 @@ class HttpAuthRemoteDataSource implements AuthRemoteDataSource {
     required this.sessionService,
   });
 
-  static final Uri _securityLoginUri = Uri.parse(
-    '${ApiConstants.baseUrl}${ApiConstants.securityLoginPath}',
-  );
   static final Uri _userLoginUri = Uri.parse(
     '${ApiConstants.baseUrl}${ApiConstants.userExternalLoginPath}',
+  );
+  static final Uri _patientCreateUri = Uri.parse(
+    '${ApiConstants.baseUrl}${ApiConstants.patientCreatePath}',
   );
 
   final http.Client client;
@@ -32,38 +32,15 @@ class HttpAuthRemoteDataSource implements AuthRemoteDataSource {
     required String username,
     required String password,
   }) async {
-    final securityResponse = await client.post(
-      _securityLoginUri,
-      headers: const {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'usuario': ApiConstants.securityApiUser,
-        'clave': ApiConstants.securityApiPassword,
-      }),
-    );
-
-    final securityBody = ApiResponseParser.decodeBody(securityResponse.body);
-    if (securityResponse.statusCode < 200 ||
-        securityResponse.statusCode >= 300) {
-      throw AppException(
-        ApiResponseParser.extractErrorMessage(
-          securityBody,
-          fallback: 'No fue posible autenticar el servicio.',
-        ),
-      );
-    }
-
-    final token = (securityBody['token'] ?? '').toString();
-    final expira = securityBody['expira']?.toString();
-    if (token.isEmpty) {
-      throw AppException('No se recibio token de autenticacion.');
-    }
-
-    await sessionService.saveToken(token: token, expiryMinutes: expira);
-
     final userResponse = await client.post(
       _userLoginUri,
-      headers: await sessionService.getAuthHeaders(),
+      headers: const {'Content-Type': 'application/json'},
       body: jsonEncode({'usuario': username, 'clave': password}),
+    );
+    HttpResponseLogger.logResponse(
+      source: 'AuthRemoteDataSource',
+      endpoint: ApiConstants.userExternalLoginPath,
+      response: userResponse,
     );
 
     final userBody = ApiResponseParser.decodeBody(userResponse.body);
@@ -80,6 +57,45 @@ class HttpAuthRemoteDataSource implements AuthRemoteDataSource {
     if (datos is! Map<String, dynamic>) {
       throw AppException('Respuesta de usuario invalida.');
     }
+
+    final patientResponse = await client.post(
+      _patientCreateUri,
+      headers: const {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': (datos['FullName'] ?? '').toString(),
+        'userCode': (datos['UserCode'] ?? '').toString(),
+        'email': (datos['Email'] ?? '').toString(),
+        'phone': (datos['Phone'] ?? '').toString(),
+        'gender': (datos['Gender'] ?? '').toString(),
+        'birthdate': (datos['Birthdate'] ?? '').toString(),
+      }),
+    );
+    HttpResponseLogger.logResponse(
+      source: 'AuthRemoteDataSource',
+      endpoint: ApiConstants.patientCreatePath,
+      response: patientResponse,
+      maskedFields: const {'token'},
+    );
+
+    final patientBody = ApiResponseParser.decodeBody(patientResponse.body);
+    if (patientResponse.statusCode < 200 || patientResponse.statusCode >= 300) {
+      throw AppException(
+        ApiResponseParser.extractErrorMessage(
+          patientBody,
+          fallback: 'No fue posible registrar el paciente.',
+        ),
+      );
+    }
+
+    final token = (patientBody['token'] ?? '').toString();
+    if (token.isEmpty) {
+      throw AppException('No se recibio token de autenticacion.');
+    }
+
+    await sessionService.saveToken(
+      token: token,
+      expiryMinutes: patientBody['expira']?.toString(),
+    );
 
     return UserModel.fromLoginJson(datos);
   }
